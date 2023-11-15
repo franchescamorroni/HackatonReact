@@ -1,5 +1,8 @@
 import "../index.css";
 import { DataGrid } from '@mui/x-data-grid';
+import { useState, useEffect } from "react";
+
+import axios from "axios";
 
 
 const columns = [
@@ -12,31 +15,45 @@ const columns = [
   { field: 'servicio', headerName: 'Código Servicio', disableColumnMenu: true, flex: 1, headerClassName: 'custom-header' },
 ];
 
-const rows = [
-  { id: 1, nombre: 'Jon', banco: 'Banco de Chile', cuenta: 987654321, monto: '$1000', producto: 'APV', servicio: '02345678' },
-  { id: 2, nombre: 'Cersei', banco: 'Banco de Chile', cuenta: 987654322, monto: '$1000', producto: 'APV', servicio: '02345678' },
-  { id: 3, nombre: 'Jaime', banco: 'Banco de Chile', cuenta: 987654326, monto: '$1000', producto: 'APV', servicio: '02345678' },
-  { id: 4, nombre: 'Arya', banco: 'Banco de Chile', cuenta: 987654354, monto: '$1000', producto: 'Mis Metas', servicio: '02345678' },
-  { id: 7, nombre: 'Ferrara', banco: 'Banco de Chile', cuenta: 987654342, monto: '$1000', producto: 'APV', servicio: '02345678' },
-  { id: 8, nombre: 'Rossini', banco: 'Banco de Chile', cuenta: 987654344, monto: '$1000', producto: 'Mis Metas', servicio: '02345678' },
-  { id: 9, nombre: 'Harvey', banco: 'Banco de Chile', cuenta: 987654378, monto: '$1000', producto: 'Mis Metas', servicio: '02345678' },
-];
-
 const customLocaleText = {
   footerRowSelected: (count) => `${count} asdsadsdsd`,
 };
 
-
 export default function Tabla() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/servicio/lista')
+      .then((res) => {
+        // Mapear datos para que coincidan con las columnas del DataGrid
+        const mappedData = res.data.map((row) => ({
+          id: row.rut, // Utilizar el campo rut como identificador único
+          rut: row.rut,
+          nombre: row.nombreCliente,
+          banco: row.nombreBanco,
+          cuenta: row.idCuenta,
+          monto: row.monto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' }),
+          producto: row.nombreProducto,
+          servicio: row.idServicio,
+        }));
+        setData(mappedData);
+      })
+      .catch((error) => {
+        console.error("Error al obtener datos:", error);
+      });
+  }, []);
+
+
   return (
     <div style={{ height: 400, width: '80%', margin: 'auto' }}>
       <DataGrid
-        rows={rows}
+        rows={data}
         columns={columns}
         autoHeight
+        getRowId={(row) => row.id} // Utiliza el campo 'id' como identificador de fila
         initialState={{
           pagination: {
-            paginationModel: { pbanco: 0, pbancoSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
         pageSizeOptions={[10, 25, 50]}
