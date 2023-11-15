@@ -74,6 +74,8 @@ export default function Tabla() {
     }
   };
 
+
+
   const handleApplyFilter = async () => {
     try {
       let response;
@@ -205,7 +207,6 @@ export default function Tabla() {
         localeText={customLocaleText}
         onRowSelectionModelChange={(e) => onRowSelected(e)}
       />
-      <button >Descargar Archivo</button>
     </div>
   );
 } 
