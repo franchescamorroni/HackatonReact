@@ -11,3 +11,23 @@ body {
   background-color: #075da2;
   color: white;
 }
+
+.containerForm {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+
+.formFecha1,
+.formFecha2 {
+  display: flex;
+}
+
+.smallCheckbox {
+  transform: scale(0.8);
+}
+
+.smallLabel {
+  font-size: 12px;
+}
