@@ -127,7 +127,6 @@ export default function Tabla() {
 
         const mappedData = response.data.map((row) => ({
           id: row.rut,
-          rut: row.rut,
           nombre: row.nombreCliente,
           banco: row.nombreBanco,
           cuenta: row.idCuenta,
@@ -206,6 +205,7 @@ export default function Tabla() {
         localeText={customLocaleText}
         onRowSelectionModelChange={(e) => onRowSelected(e)}
       />
+      <button >Descargar Archivo</button>
     </div>
   );
 } 
