@@ -1,13 +1,7 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 
 body {
   background-color: #ecf2ff;
 }
 
-.custom-header {
-  background-color: #075da2;
-  color: white;
-}
+
+
