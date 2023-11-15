@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import "./index.css";
 import Home from "./pages/Home";
+import "tailwindcss/tailwind.css";
+import "./index.css";
+
 
 
 function App() {
